@@ -23,16 +23,16 @@ classdef CalibrationTarget < handle
           h2 = textscan(fid,'%s%f', 1, 'delimiter', ',');
           board.ofs = ofs;
           board.id   = h1{1};
-          board.rows = h1{2} - 1;
+          board.rows = h1{2};
           if (h1{3} == 0)
             % triangular
-            board.cols = h1{2} -1;
+            board.cols = h1{2};
             board.type = 1;
             nodes =  board.rows*(board.cols-1)/2;
             fprintf(1, 'Reading triangular target plane %d, sz: %d x %d, %d nodes\n', board.id, board.rows, board.cols, nodes);
           else
             % rectangular
-            board.cols = h1{3} - 1;
+            board.cols = h1{3};
             board.type = 0;
             nodes =  board.rows*board.cols;
             fprintf(1, 'Reading rectangular target plane %d, sz: %d x %d, %d nodes\n', board.id, board.rows, board.cols, nodes);
@@ -49,7 +49,7 @@ classdef CalibrationTarget < handle
           % positions on the board
           board.nodes = [t(2), t(3)];
           % designed positions of points -> convert to mm
-          board.pts = [t{4}*10.0, t{5}*10.0 t{6}*10.0];
+          board.pts = [t{4}*75.0, t{5}*75.0, t{6}*75.0];
           this.boards_{end+1} = board;
         else
           break;
